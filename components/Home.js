@@ -21,21 +21,21 @@ export default Home = ({ navigation }) => {
     return (
         <>
             <Header />
-            <View>
+            <View style={styles.gameboard}>
                 {!hasPlayerName ?
                     <>
-                        <Text>
-                            For scoreboard enter yout name:
+                        <Text style={styles.gameinfo}>
+                            For scoreboard enter your name:
                         </Text>
-                        <TextInput onChangeText={setPlayerName} autoFocus={true} />
+                        <TextInput style={styles.textInput} onChangeText={setPlayerName} autoFocus={true} />
                         <Pressable style={styles.button} onPress={() => handlePlayerName(playerName)}>
                             <Text>OK</Text>
                         </Pressable>
                     </>
                     :
                     <>
-                        <Text>Rules of the game:</Text>
-                        <Text multiline="true">
+                        <Text style={styles.gameinfo}>Rules of the game:</Text>
+                        <Text style={styles.rulestext} multiline="true">
                             THE GAME: Upper section of the classic Yahtzee
                             dice game. You have {NBR_OF_DICES} dices and
                             for the every dice you have {NBR_OF_THROWS}
@@ -46,22 +46,22 @@ export default Home = ({ navigation }) => {
                             Game ends when all points have been selected.
                             The order for selecting those is free.
                         </Text>
-                        <Text multiline="true">
+                        <Text style={styles.rulestext} multiline="true">
                             POINTS: After each turn game calculates the sum
                             for the dices you selected. Only the dices having
                             the same spot count are calculated. Inside the
                             game you can not select same points from
                             {MIN_SPOT} to {MAX_SPOT} again.
                         </Text>
-                        <Text multiline="true">
+                        <Text style={styles.rulestext} multiline="true">
                             GOAL: To get points as much as possible.
                             {BONUS_POINTS_LIMIT} points is the limit of
                             getting bonus which gives you {BONUS_POINTS}
                             points more.
                         </Text>
-                        <Text>Good luck, {playerName}</Text>
+                        <Text style={styles.gameinfo}>Good luck, {playerName}</Text>
                         <Pressable style={styles.button} onPress={() => navigation.navigate("Gameboard", { player: playerName })}>
-                            <Text>PLAY</Text>
+                            <Text style={styles.buttonText}>PLAY</Text>
                         </Pressable>
                     </>
                 }

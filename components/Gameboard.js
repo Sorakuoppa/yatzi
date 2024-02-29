@@ -45,7 +45,7 @@ export default Gameboard = ({ navigation, route }) => {
             </Col>
         );
     }
-/* call the function for calculating poitns inside text */
+    /* call the function for calculating poitns inside text */
     const pointsRow = [];
     for (let spot = 0; spot < MAX_SPOT; spot++) {
         pointsRow.push(
@@ -74,20 +74,22 @@ export default Gameboard = ({ navigation, route }) => {
     }
 
     function getDiceColor(i) {
-        return selectedDices[i] ? "black" : "steelblue";
+        return selectedDices[i] ? "#254f25" : "#50a950";
     }
 
     function getDicePointsColor(i) {
         if (selectedDicePoints[i] && !gameEndStatus) {
-            return "black";
+            return "#254f25";
         } else {
-            return "steelblue";
-        }  
+            return "#50a950";
+        }
     }
 
     function getSpotTotal(i) {
         return dicePointsTotal[i];
     }
+
+    const sum = dicePointsTotal.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     const selectedDice = (i) => {
         if (nbrOfThrows < NBR_OF_THROWS && !gameEndStatus) {
@@ -110,9 +112,6 @@ export default Gameboard = ({ navigation, route }) => {
         points[i] = nbrOfDices * (i + 1);
         setDicePointsTotal(points);
         setSelectedDicePoints(selectedPoints);
-        console.log(selectedPoints);
-        console.log(points);
-        console.log(nbrOfDices);
         return points[i];
     }
 
@@ -120,7 +119,7 @@ export default Gameboard = ({ navigation, route }) => {
         if (nbrOfThrows === 0 && !gameEndStatus) {
             setStatus("Select your points before next throw.")
             return 1;
-        } else if(nbrOfThrows === 0 && gameEndStatus) {
+        } else if (nbrOfThrows === 0 && gameEndStatus) {
             setGameEndStatus(false);
             diceSpots.fill(0);
             dicePointsTotal.fill(0);
@@ -140,25 +139,28 @@ export default Gameboard = ({ navigation, route }) => {
 
     return (
         <>
-            <Header />
-            <View style={styles.gameboard}>
-                <Text>Throws left: {nbrOfThrows}</Text>
-                <Container fluid>
-                    <Row>{dicesRow}</Row>
-                </Container>
-                <Text>{status}</Text>
-                <Pressable onPress={throwDices} style={styles.button}>
-                    <Text>THROW DICES</Text>
-                </Pressable>
-                <Container fluid>
-                    <Row>{pointsRow}</Row>
-                </Container>
-                <Container fluid>
-                    <Row>{pointsToSelectRow}</Row>
-                </Container>
-                <Text>Player: {playerName}</Text>
+            <View style={styles.container}>
+                <Header />
+                <View style={styles.gameboard}>
+                    <Text style={styles.gametext}>Throws left: {nbrOfThrows}</Text>
+                    <Container fluid>
+                        <Row>{dicesRow}</Row>
+                    </Container>
+                    <Text style={styles.gametext}>{status}</Text>
+                    <Pressable onPress={throwDices} style={styles.button}>
+                        <Text style={styles.buttonText}>THROW DICES</Text>
+                    </Pressable>
+                    <Text style={styles.gametext}>Total points: {sum} </Text>
+                    <Container fluid>
+                        <Row>{pointsRow}</Row>
+                    </Container>
+                    <Container fluid>
+                        <Row>{pointsToSelectRow}</Row>
+                    </Container>
+                    <Text style={styles.gametext}>Player: {playerName}</Text>
+                </View>
+                <Footer />
             </View>
-            <Footer />
         </>
     )
 }

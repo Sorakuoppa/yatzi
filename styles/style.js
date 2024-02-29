@@ -3,18 +3,20 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    justifyContent: 'space-between'
   },
   header: {
     marginTop: 30,
     marginBottom: 15,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#50a950',
     flexDirection: 'row',
   },
   footer: {
     marginTop: 20,
-    backgroundColor: 'skyblue',
-    flexDirection: 'row'
+    backgroundColor: '#50a950',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   title: {
     color: '#fff',
@@ -42,7 +44,21 @@ export default StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 20,
+    marginTop: 10,
+    marginBottom: 10
+  },
+  rulestext: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 15,
     marginTop: 10
+  },
+  gametext: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 20,
+    marginTop: 10,
+    marginBottom: 10
   },
   row: {
     marginTop: 20,
@@ -52,17 +68,23 @@ export default StyleSheet.create({
     flexDirection: "row"
   },
   button: {
-    margin: 30,
+    margin: 20,
     flexDirection: "row",
-    padding: 10,
-    backgroundColor: "#73CED6",
+    padding: 12,
+    backgroundColor: "#50a950",
     width: 150,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center'
   },
   buttonText: {
-    color:"#2B2B52",
-    fontSize: 20
+    color:"#ffffff",
+    fontSize: 15
+  },
+  textInput: {
+    width: "60%",
+    borderWidth: 2,
+    borderColor: "#000000",
+    textAlign: 'center'
   }
 });
