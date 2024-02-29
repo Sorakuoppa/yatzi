@@ -28,7 +28,7 @@ export default Home = ({ navigation }) => {
                             For scoreboard enter yout name:
                         </Text>
                         <TextInput onChangeText={setPlayerName} autoFocus={true} />
-                        <Pressable onPress={() => handlePlayerName(playerName)}>
+                        <Pressable style={styles.button} onPress={() => handlePlayerName(playerName)}>
                             <Text>OK</Text>
                         </Pressable>
                     </>
@@ -60,7 +60,7 @@ export default Home = ({ navigation }) => {
                             points more.
                         </Text>
                         <Text>Good luck, {playerName}</Text>
-                        <Pressable onPress={() => navigation.navigate("Gameboard", { player: playerName })}>
+                        <Pressable style={styles.button} onPress={() => navigation.navigate("Gameboard", { player: playerName })}>
                             <Text>PLAY</Text>
                         </Pressable>
                     </>
