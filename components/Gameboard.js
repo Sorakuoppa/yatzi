@@ -22,7 +22,7 @@ export default Gameboard = ({ navigation, route }) => {
     /* Are dice points selected or not */
     const [selectedDicePoints, setSelectedDicePoints] = useState(new Array(MAX_SPOT).fill(false));
 
-    const [dicePointsTotal, setdicePointsTotal] = useState(new Array(MAX_SPOT).fill(0));
+    const [dicePointsTotal, setDicePointsTotal] = useState(new Array(MAX_SPOT).fill(0));
 
     useEffect(() => {
         if (playerName === "" && route.params?.player) {
@@ -51,7 +51,7 @@ export default Gameboard = ({ navigation, route }) => {
         pointsRow.push(
             <Col key={"pointsRow" + spot}>
                 <Text key={"pointsRow" + spot}>
-                    0
+                    {getSpotTotal(spot)}
                 </Text>
             </Col>
         );
@@ -61,13 +61,12 @@ export default Gameboard = ({ navigation, route }) => {
     for (let diceButton = 0; diceButton < MAX_SPOT; diceButton++) {
         pointsToSelectRow.push(
             <Col key={"buttonsRow" + diceButton}>
-                <Pressable key={"buttonsRow" + diceButton} /* onPress={() => selected()} */>
+                <Pressable key={"buttonsRow" + diceButton} onPress={() => selectDicePoints(diceButton)}>
                     <MaterialCommunityIcons
                         name={"numeric-" + (diceButton + 1) + "-circle"}
                         key={"buttonsRow" + diceButton}
                         size={35}
-                        color={"green"}>
-                        {/* Pressable here for getting the color */}
+                        color={getDicePointsColor(diceButton)}>
                     </MaterialCommunityIcons>
                 </Pressable>
             </Col>
@@ -76,6 +75,18 @@ export default Gameboard = ({ navigation, route }) => {
 
     function getDiceColor(i) {
         return selectedDices[i] ? "black" : "steelblue";
+    }
+
+    function getDicePointsColor(i) {
+        if (selectedDicePoints[i] && !gameEndStatus) {
+            return "black";
+        } else {
+            return "steelblue";
+        }  
+    }
+
+    function getSpotTotal(i) {
+        return dicePointsTotal[i];
     }
 
     const selectedDice = (i) => {
@@ -90,14 +101,41 @@ export default Gameboard = ({ navigation, route }) => {
 
     }
 
+    const selectDicePoints = (i) => {
+        /* first version */
+        let selectedPoints = [...selectedDicePoints];
+        let points = [...dicePointsTotal];
+        selectedPoints[i] = true;
+        let nbrOfDices = diceSpots.reduce((total, x) => (x === (i + 1) ? total + 1 : total), 0);
+        points[i] = nbrOfDices * (i + 1);
+        setDicePointsTotal(points);
+        setSelectedDicePoints(selectedPoints);
+        console.log(selectedPoints);
+        console.log(points);
+        console.log(nbrOfDices);
+        return points[i];
+    }
+
     const throwDices = () => {
+        if (nbrOfThrows === 0 && !gameEndStatus) {
+            setStatus("Select your points before next throw.")
+            return 1;
+        } else if(nbrOfThrows === 0 && gameEndStatus) {
+            setGameEndStatus(false);
+            diceSpots.fill(0);
+            dicePointsTotal.fill(0);
+        }
+        let spots = [...diceSpots];
         for (let i = 0; i < NBR_OF_DICES; i++) {
             if (!selectedDices[i]) {
                 let randomNumber = Math.floor(Math.random() * 6 + 1);
                 board[i] = "dice-" + randomNumber;
+                spots[i] = randomNumber
             }
         }
         setNbrOfThrows(nbrOfThrows - 1);
+        setDiceSpots(spots);
+        setStatus("Select and throw dices again.")
     }
 
     return (
@@ -108,6 +146,7 @@ export default Gameboard = ({ navigation, route }) => {
                 <Container fluid>
                     <Row>{dicesRow}</Row>
                 </Container>
+                <Text>{status}</Text>
                 <Pressable onPress={throwDices} style={styles.button}>
                     <Text>THROW DICES</Text>
                 </Pressable>
