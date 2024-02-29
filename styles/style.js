@@ -51,7 +51,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 15,
-    marginTop: 10
+    margin: 10
   },
   gametext: {
     textAlign: 'center',
@@ -59,6 +59,11 @@ export default StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     marginBottom: 10
+  },
+  scoreNumber: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 17
   },
   row: {
     marginTop: 20,

@@ -50,7 +50,7 @@ export default Gameboard = ({ navigation, route }) => {
     for (let spot = 0; spot < MAX_SPOT; spot++) {
         pointsRow.push(
             <Col key={"pointsRow" + spot}>
-                <Text key={"pointsRow" + spot}>
+                <Text style={styles.scoreNumber} key={"pointsRow" + spot}>
                     {getSpotTotal(spot)}
                 </Text>
             </Col>
